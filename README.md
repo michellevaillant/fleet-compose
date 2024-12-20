@@ -2,6 +2,8 @@
 todo
 ## setup winlogbeat
 ### configure winlogbeat.yml
+todo: add tls support  
+
 1 setup templates, dashboards etc in elastcisearch/kibana  
 1.1 configure elasticsearch output and kibana
 ```

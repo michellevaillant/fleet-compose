@@ -1,6 +1,5 @@
-#- pipeline.id: json
-#  path.config: "/usr/share/logstash/pipeline/logstash-json-pipeline.config"
-- pipeline.id: csv
-  path.config: "/usr/share/logstash/pipeline/logstash-csv-pipeline.config"
 - pipeline.id: winlogbeat
   path.config: "/usr/share/logstash/pipeline/winlogbeat.config"
+# remove after testing:
+- pipeline.id: csv
+  path.config: "/usr/share/logstash/pipeline/logstash-csv-pipeline.config"
