@@ -10,9 +10,13 @@ todo: add tls support
 setup.dashboards.enabled: true
 setup.kibana:
   host: "http://<kibana>:5601"
+  ssl.verification_mode: none
 output.elasticsearch:
-  hosts: ["http://<elasticsearch>:9200"]
+  hosts: ["https://<elasticsearch>:9200"]
+  ssl.verification_mode: none
 ```  
+todo: add ca verification  
+
 1.2 start setup ```winlogbeat.exe setup```   
 1.3 disable elasticsearch output 
 ```
@@ -25,18 +29,18 @@ output.logstash:
   hosts: ["<logstash>:5044"]
 ```
 ### install service
-1 run powershell script ```install-service-winlogbeat```
-2 star service ```winlogbeat```
-## enroll with fleet and server setup
-in kibana -> fleet -> change output in settings:
-Hosts -> https://es01:9200  
-pull the CA certificate from container:  
-docker cp elk-csv-import-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt /tmp/.  
-get fingerprint of ca:  
-openssl x509 -fingerprint -sha256 -noout -in /tmp/ca.crt | awk -F"=" {' print $2 '} | sed s/://g  
-insert fingerprint in settings CA trusted fingerprint.  
-get ca crt content with cat.  
-insert in settings yaml:  
+1. run powershell script ```install-service-winlogbeat```
+2. start service ```winlogbeat```
+## setup fleet server
+in https://`kibana-url`5601 -> fleet -> settings -> outputs:
+- Hosts -> https://es01:9200  
+- Elasticsearch CA trusted fingerprint (optional):
+  - pull the CA certificate from container `docker cp fleet-compose-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt /tmp/.`  
+  - get fingerprint of ca `openssl x509 -fingerprint -sha256 -noout -in /tmp/ca.crt | awk -F"=" {' print $2 '} | sed s/://g`  
+  - insert fingerprint in text box.  
+- advanced YAML configuration:  
+  - get `ca.crt` content with `cat /tmp/ca.crt`  
+  - insert in settings yaml:  
 ```
 ssl:
   certificate_authorities:
@@ -62,3 +66,6 @@ ssl:
     9DxfOLPbFvlIQcRXvGEcWqQ0jvq02h0HTBSYKZxH
     -----END CERTIFICATE-----
 ```
+## enroll agent
+- create fleet server host for remote agents
+- create output for remote agents
