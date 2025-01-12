@@ -1,24 +1,32 @@
 ## add logstash pipelines
 todo
+## configure logging
+todo: sysmon configuration  
+todo: windows logging config https://github.com/Yamato-Security/EnableWindowsLogSettings
 ## setup winlogbeat
-### configure winlogbeat.yml
+### configure winlogbeat.yml/logging
 todo: add tls support  
+https://www.elastic.co/fr/downloads/beats/winlogbeat  
 
 1 setup templates, dashboards etc in elastcisearch/kibana  
 1.1 configure elasticsearch output and kibana
 ```
 setup.dashboards.enabled: true
 setup.kibana:
-  host: "http://<kibana>:5601"
+  host: "https://<kibana>:5601"
   ssl.verification_mode: none
+  username: "elastic"
+  password: "changeme"
 output.elasticsearch:
   hosts: ["https://<elasticsearch>:9200"]
   ssl.verification_mode: none
+  username: "elastic"
+  password: "changeme"
 ```  
 todo: add ca verification  
 
 1.2 start setup ```winlogbeat.exe setup```   
-1.3 disable elasticsearch output 
+<!-- 1.3 disable elasticsearch output 
 ```
 # output.elasticsearch:
 #  hosts: ["http://<elasticsearch>:9200"]
@@ -27,11 +35,11 @@ todo: add ca verification
 ```
 output.logstash:
   hosts: ["<logstash>:5044"]
-```
+``` -->
 ### install service
 1. run powershell script ```install-service-winlogbeat```
 2. start service ```winlogbeat```
-## setup fleet server
+## or alternatively: setup fleet server
 in https://`kibana-url`5601 -> fleet -> settings -> outputs:
 - Hosts -> https://es01:9200  
 - Elasticsearch CA trusted fingerprint (optional):
@@ -68,4 +76,8 @@ ssl:
 ```
 ## enroll agent
 - create fleet server host for remote agents
-- create output for remote agents
+- create output for remote agents  
+
+
+
+todo: remove logstash part
