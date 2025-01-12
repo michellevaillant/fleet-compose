@@ -1,12 +1,14 @@
 server.host: "0.0.0.0"
 telemetry.enabled: false
 telemetry.optIn: false
-  #xpack.fleet.outputs:
-  #- id: my-logstash-output-with-a-secret
-  #  name: preconfigured logstash output with a secret
-  #  type:  elasticsearch
-  #  hosts: ["https://es01:9200"]
-  #  is_default: true
+xpack.fleet.outputs:
+  - name: default
+    id: fleet-default-output
+    is_default: true
+    type:  elasticsearch
+    hosts: ["https://es01:9200","https://localhost:9200"]
+    config:
+      ssl.verification_mode: none
 xpack.fleet.fleetServerHosts:
   - name: fleet-server-default-host 
     id: fleet-server-host
@@ -19,7 +21,7 @@ xpack.fleet.packages:
   - name: elastic_agent
     version: latest
 xpack.fleet.agentPolicies:
-  - name: Fleet-Server-Policy
+  - name: Fleet-Logshipper-Policy
     id: fleet-server-policy
     namespace: default
     monitoring_enabled: 
@@ -32,9 +34,6 @@ xpack.fleet.agentPolicies:
       - name: system-1
         package:
           name: system
-      - name: elastic_agent-1
-        package:
-          name: elastic_agent
   - name: Windows-Server-Policy
     id: windows-server-policy
     namespace: default
@@ -45,6 +44,3 @@ xpack.fleet.agentPolicies:
       - name: system-1
         package:
           name: system
-      - name: elastic_agent-1
-        package:
-          name: elastic_agent
