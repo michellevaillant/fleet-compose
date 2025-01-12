@@ -2,43 +2,23 @@
 todo
 ## configure logging
 todo: sysmon configuration  
-todo: windows logging config https://github.com/Yamato-Security/EnableWindowsLogSettings
+### enable windows event log channels
+1. run batch script from https://github.com/Yamato-Security/EnableWindowsLogSettings  
+2. run `config/enable_channels.bat`
 ## setup winlogbeat
-### configure winlogbeat.yml/logging
-todo: add tls support  
+### configure winlogbeat
+todo: add ca verification    
 https://www.elastic.co/fr/downloads/beats/winlogbeat  
 
-1 setup templates, dashboards etc in elastcisearch/kibana  
-1.1 configure elasticsearch output and kibana
-```
-setup.dashboards.enabled: true
-setup.kibana:
-  host: "https://<kibana>:5601"
-  ssl.verification_mode: none
-  username: "elastic"
-  password: "changeme"
-output.elasticsearch:
-  hosts: ["https://<elasticsearch>:9200"]
-  ssl.verification_mode: none
-  username: "elastic"
-  password: "changeme"
-```  
-todo: add ca verification  
+1. download winlogbeat
+2. copy config from `config/winlogbeat.yml` to target machine and edit output hosts
+3. start setup: ```winlogbeat.exe setup```   
+4. test winlogbeat configuration `winlogbeat.exe -c winlogbeat.yml`
 
-1.2 start setup ```winlogbeat.exe setup```   
-<!-- 1.3 disable elasticsearch output 
-```
-# output.elasticsearch:
-#  hosts: ["http://<elasticsearch>:9200"]
-```
-2 enable and configure logstash output in winlogbeat.yml
-```
-output.logstash:
-  hosts: ["<logstash>:5044"]
-``` -->
-### install service
+### install winlogbeat service
 1. run powershell script ```install-service-winlogbeat```
 2. start service ```winlogbeat```
+
 ## or alternatively: setup fleet server
 in https://`kibana-url`5601 -> fleet -> settings -> outputs:
 - Hosts -> https://es01:9200  

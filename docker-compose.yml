@@ -76,6 +76,7 @@ services:
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ES_JAVA_OPTS=-Xms${ES_HEAP}g -Xmx${ES_HEAP}g
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/es01/es01.key
@@ -87,7 +88,6 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
-    mem_limit: ${ES_MEM_LIMIT}
     ulimits:
       memlock:
         soft: -1
@@ -125,7 +125,6 @@ services:
       - XPACK_REPORTING_ENCRYPTIONKEY=${ENCRYPTION_KEY}
       - SERVER_SSL_CERTIFICATE=config/certs/kibana/kibana.crt
       - SERVER_SSL_KEY=config/certs/kibana/kibana.key
-    mem_limit: ${KB_MEM_LIMIT}
     healthcheck:
       test:
         [
@@ -189,3 +188,4 @@ services:
       - ELASTIC_HOSTS=https://es01:9200
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - "LS_JAVA_OPTS=-Xmx${LS_HEAP}g -Xms${LS_HEAP}g"

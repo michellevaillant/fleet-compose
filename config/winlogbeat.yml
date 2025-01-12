@@ -1,0 +1,60 @@
+# windows event channel selection
+winlogbeat.event_logs:
+  - name: Application
+  - name: System
+  - name: Security
+  - name: Microsoft-Windows-Sysmon/Operational
+  - name: Windows PowerShell
+  - name: Microsoft-Windows-PowerShell/Operational
+  - name: ForwardedEvents
+    tags: [forwarded]
+  - name: PowerShellCore/Operational
+
+# recommended channels for maximum sigmahq coverage
+  - name: Microsoft-Windows-Windows Defender/Operational
+  - name: Microsoft-Windows-Bits-Client/Operational
+  - name: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+  - name: Microsoft-Windows-NTLM/Operational
+  - name: Microsoft-Windows-Security-Mitigations/KernelMode
+  - name: Microsoft-Windows-Security-Mitigations/UserMode
+  - name: Microsoft-Windows-PrintService/Admin
+  - name: Microsoft-Windows-PrintService/Operational
+  - name: Microsoft-Windows-SmbClient/Security
+  - name: Microsoft-Windows-AppLocker/MSI and Script
+  - name: Microsoft-Windows-AppLocker/EXE and DLL
+  - name: Microsoft-Windows-AppLocker/Packaged app-Deployment
+  - name: Microsoft-Windows-AppLocker/Packaged app-Execution
+  - name: Microsoft-Windows-CodeIntegrity/Operational
+  - name: Microsoft-Windows-Diagnosis-Scripted/Operational
+  - name: Microsoft-Windows-DriverFrameworks-UserMode/Operational
+  - name: Microsoft-Windows-WMI-Activity/Operational
+  - name: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational
+  - name: Microsoft-Windows-TaskScheduler/Operational
+
+# SANS recommended channels for incident response
+  - name: Microsoft-Windows-DNS-Client/Operational
+  - name: Microsoft-Windows-Diagnostics-Performance/Operational
+  - name: Microsoft-Windows-Kernel-Boot
+  - name: Microsoft-Windows-Kernel-General
+  - name: Microsoft-Windows-DeviceSetupManager/Admin
+  - name: Microsoft-Windows-DeviceSetupManager/Operational
+  - name: Microsoft-Windows-BitLocker-DrivePreparationTool/Operational
+  - name: Microsoft-Windows-WindowsUpdateClient/Operational
+  - name: Microsoft-Windows-DNS-Server/Operational
+
+# elastic connection config
+setup.template.settings:
+  index.number_of_shards: 1
+
+setup.dashboards.enabled: true
+setup.kibana:
+  host: "https://<kibana>:5601"
+  ssl.verification_mode: none
+  username: "elastic"
+  password: "changeme"
+
+output.elasticsearch:
+  hosts: ["https://<elastic>:9200"]
+  ssl.verification_mode: none
+  username: "elastic"
+  password: "changeme"
