@@ -176,7 +176,8 @@ services:
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     user: root
     ports:
-      - "5044:5044"
+      - "5044:5044" # expose for winlogbeat pipeline
+      - "10514:10514" # expose for sample syslog pipeline
     volumes:
       - certs:/usr/share/logstash/certs
       - logstashdata01:/usr/share/logstash/data

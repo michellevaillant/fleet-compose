@@ -1,5 +1,7 @@
-- pipeline.id: winlogbeat
-  path.config: "/usr/share/logstash/pipeline/winlogbeat.config"
-# remove after testing:
-- pipeline.id: csv
-  path.config: "/usr/share/logstash/pipeline/logstash-csv-pipeline.config"
+# enable or extend as needed
+- pipeline.id: syslog
+  path.config: "/usr/share/logstash/pipeline/sample_syslog.config"
+# - pipeline.id: winlogbeat
+#   path.config: "/usr/share/logstash/pipeline/winlogbeat.config"
+# - pipeline.id: csv
+#   path.config: "/usr/share/logstash/pipeline/logstash-csv-pipeline.config"

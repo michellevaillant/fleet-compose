@@ -2,6 +2,7 @@
 todo
 ## configure logging
 todo: sysmon configuration  
+https://github.com/olafhartong/sysmon-modular
 ### enable windows event log channels
 1. run batch script from https://github.com/Yamato-Security/EnableWindowsLogSettings  
 2. run `config/enable_channels.bat`
@@ -57,7 +58,3 @@ ssl:
 ## enroll agent
 - create fleet server host for remote agents
 - create output for remote agents  
-
-
-
-todo: remove logstash part
